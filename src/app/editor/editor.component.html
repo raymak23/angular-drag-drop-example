@@ -1,0 +1,56 @@
+<div style="display:grid;" *ngIf="checker.index > -1">
+  <mat-card>
+    Change the label in done:
+    <input [(ngModel)]="droppedTemplate[checker.index].name" />
+  </mat-card>
+</div>
+<div style="display: flex;">
+  <div style="flex-basis: 20%">
+    <mat-card>
+      <div class="example-container">
+        <h2>To do</h2>
+
+        <div
+          cdkDropList
+          #todoList="cdkDropList"
+          [cdkDropListData]="defaultTemplates"
+          [cdkDropListConnectedTo]="[doneList]"
+          class="example-list"
+          cdkDropListSortingDisabled
+        >
+          <div
+            class="example-box"
+            *ngFor="let item of defaultTemplates"
+            cdkDrag
+          >
+            {{ item.name }}
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div style="flex-basis: 80%">
+    <mat-card>
+      <div class="example-container">
+        <h2>Done</h2>
+
+        <div
+          cdkDropList
+          #doneList="cdkDropList"
+          [cdkDropListData]="droppedTemplate"
+          class="example-list"
+          (cdkDropListDropped)="dropIt($event)"
+        >
+          <div
+            (click)="onDoneListClick(i)"
+            class="example-box"
+            *ngFor="let item of droppedTemplate; let i = index"
+            cdkDrag
+          >
+            {{ item.name }}
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
